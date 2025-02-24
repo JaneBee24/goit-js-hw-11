@@ -20,5 +20,6 @@ async function fetchImages(query) {
     } catch (error) {
         console.error('Ошибка при запросе к API:', error);
     }
+}
 
 fetchImages('flowers').then(images => console.log(images));
