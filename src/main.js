@@ -1,4 +1,4 @@
-import fetchImages from './js/pixabay-api.js';
+import { fetchImages } from './js/pixabay-api.js';
 import { renderGallery } from './js/render-functions.js';
 
 const searchForm = document.querySelector('#search-form');
