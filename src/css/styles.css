@@ -95,3 +95,5 @@ header {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+@import 'css-loader/dist/css-loader.css';
