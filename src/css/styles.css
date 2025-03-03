@@ -1,6 +1,9 @@
 body {
   font-family: Arial, sans-serif;
   text-align: center;
+  background-color: #f8f9fa;
+  margin: 0;
+  padding: 0;
 }
 
 .search-form {
@@ -11,18 +14,24 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
+  gap: 20px;
+  margin: 20px auto;
+  max-width: 1200px;
 }
 
 .gallery-item {
-  width: 250px;
+  width: 300px;
+  background: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
 }
 
 .gallery img {
   width: 100%;
   height: auto;
-  border-radius: 8px;
+  border-radius: 10px 10px 0 0;
   transition: transform 0.3s ease-in-out;
 }
 
@@ -33,12 +42,18 @@ body {
 .load-more {
   display: block;
   margin: 20px auto;
-  padding: 10px 20px;
-  font-size: 16px;
+  padding: 12px 24px;
+  font-size: 18px;
   background-color: #007bff;
   color: white;
   border: none;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.load-more:hover {
+  background-color: #0056b3;
 }
 
 .hidden {
@@ -48,10 +63,9 @@ body {
 .image-info {
   display: flex;
   justify-content: space-between;
-  padding: 5px;
+  padding: 10px;
   font-size: 14px;
   background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 0 0 5px 5px;
   text-align: center;
 }
 
