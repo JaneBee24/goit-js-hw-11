@@ -27,6 +27,7 @@ body {
   overflow: hidden;
   transition: transform 0.3s ease-in-out;
   text-align: center;
+  position: relative;
 }
 
 .gallery img {
@@ -39,6 +40,10 @@ body {
 
 .gallery img:hover {
   transform: scale(1.05);
+}
+
+.gallery-item::before {
+  content: none;
 }
 
 .load-more {
