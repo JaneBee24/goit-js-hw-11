@@ -43,7 +43,8 @@ body {
 }
 
 .gallery-item::before {
-  content: none;
+  content: none !important;
+  display: none !important;
 }
 
 .load-more {
