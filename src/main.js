@@ -1,29 +1,57 @@
-import { fetchImages } from './js/pixabay-api.js';
-import { renderGallery } from './js/render-functions.js';
+import { fetchImages } from "./js/pixabay-api.js";
+import { renderGallery, clearGallery } from "./js/render-functions.js";
+import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
 
-const searchForm = document.querySelector('#search-form');
-const gallery = document.querySelector('.gallery');
+const form = document.querySelector(".search-form");
+const gallery = document.querySelector(".gallery");
+const loadMoreBtn = document.querySelector(".load-more");
 
-searchForm.addEventListener('submit', async (event) => {
-  event.preventDefault();
-  const query = event.target.elements.searchQuery.value.trim();
-  
-  if (!query) {
-    alert('Введите поисковый запрос!');
-    return;
-  }
+let query = "";
+let page = 1;
+const perPage = 40;
+let totalHits = 0;
 
-  gallery.innerHTML = ''; 
-
-  try {
-    const data = await fetchImages(query);
-    if (data.hits.length === 0) {
-      alert('Картинки не найдены. Попробуйте другой запрос.');
-      return;
+form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    query = event.currentTarget.elements.query.value.trim();
+    if (!query) {
+        iziToast.warning({ title: "Увага", message: "Введіть запит для пошуку!" });
+        return;
     }
+    
+    page = 1;
+    clearGallery();
+    loadMoreBtn.classList.add("hidden");
 
-    renderGallery(data.hits);
-  } catch (error) {
-    console.error('Ошибка загрузки изображений:', error);
-  }
+    try {
+        const { images, total } = await fetchImages(query, page, perPage);
+        totalHits = total;
+        if (images.length === 0) {
+            iziToast.error({ title: "Помилка", message: "Нічого не знайдено!" });
+            return;
+        }
+        renderGallery(images);
+        if (totalHits > perPage) loadMoreBtn.classList.remove("hidden");
+    } catch (error) {
+        iziToast.error({ title: "Помилка", message: "Не вдалося завантажити зображення." });
+    }
+});
+
+loadMoreBtn.addEventListener("click", async () => {
+    page++;
+    try {
+        const { images } = await fetchImages(query, page, perPage);
+        renderGallery(images);
+
+        if (page * perPage >= totalHits) {
+            loadMoreBtn.classList.add("hidden");
+            iziToast.info({ title: "Інформація", message: "Це останні зображення." });
+        }
+
+        const { height } = document.querySelector(".gallery-item").getBoundingClientRect();
+        window.scrollBy({ top: height * 2, behavior: "smooth" });
+    } catch (error) {
+        iziToast.error({ title: "Помилка", message: "Не вдалося завантажити зображення." });
+    }
 });
