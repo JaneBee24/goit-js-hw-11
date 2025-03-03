@@ -28,7 +28,7 @@ export default defineConfig(({ command }) => {
           },
           assetFileNames: assetInfo => {
             if (assetInfo.name && assetInfo.name.endsWith('.html')) {
-              return '[name].[ext]';
+              return '[name]-[hash].[ext]';
             }
             return 'assets/[name]-[hash][extname]';
           },
