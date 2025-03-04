@@ -24,7 +24,7 @@ form.addEventListener("submit", async (event) => {
     page = 1;
     clearGallery();
     loadMoreBtn.classList.add("hidden");
-    loader.classList.remove("hidden");  
+    loader.classList.remove("hidden"); 
 
     try {
         const { images, total } = await fetchImages(query, page, perPage);
@@ -44,7 +44,7 @@ form.addEventListener("submit", async (event) => {
 
 loadMoreBtn.addEventListener("click", async () => {
     page++;
-    loader.classList.remove("hidden");  
+    loader.classList.remove("hidden"); 
 
     try {
         const { images } = await fetchImages(query, page, perPage);
@@ -60,6 +60,6 @@ loadMoreBtn.addEventListener("click", async () => {
     } catch (error) {
         iziToast.error({ title: "Помилка", message: "Не вдалося завантажити зображення." });
     } finally {
-        loader.classList.add("hidden");  
+        loader.classList.add("hidden"); 
     }
 });
