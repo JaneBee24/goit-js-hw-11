@@ -6,6 +6,7 @@ import "izitoast/dist/css/iziToast.min.css";
 const form = document.querySelector(".search-form");
 const gallery = document.querySelector(".gallery");
 const loadMoreBtn = document.querySelector(".load-more");
+const loader = document.querySelector(".loader");
 
 let query = "";
 let page = 1;
@@ -23,6 +24,7 @@ form.addEventListener("submit", async (event) => {
     page = 1;
     clearGallery();
     loadMoreBtn.classList.add("hidden");
+    loader.classList.remove("hidden");  
 
     try {
         const { images, total } = await fetchImages(query, page, perPage);
@@ -35,11 +37,15 @@ form.addEventListener("submit", async (event) => {
         if (totalHits > perPage) loadMoreBtn.classList.remove("hidden");
     } catch (error) {
         iziToast.error({ title: "Помилка", message: "Не вдалося завантажити зображення." });
+    } finally {
+        loader.classList.add("hidden"); 
     }
 });
 
 loadMoreBtn.addEventListener("click", async () => {
     page++;
+    loader.classList.remove("hidden");  
+
     try {
         const { images } = await fetchImages(query, page, perPage);
         renderGallery(images);
@@ -53,5 +59,7 @@ loadMoreBtn.addEventListener("click", async () => {
         window.scrollBy({ top: height * 2, behavior: "smooth" });
     } catch (error) {
         iziToast.error({ title: "Помилка", message: "Не вдалося завантажити зображення." });
+    } finally {
+        loader.classList.add("hidden");  
     }
 });
