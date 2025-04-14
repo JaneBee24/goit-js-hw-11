@@ -93,8 +93,13 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
+  background: rgba(255, 255, 255, 0.7);  
+  border-color: #3498db transparent transparent transparent;
 }
-.hidden {
-  display: none;
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
+
 
