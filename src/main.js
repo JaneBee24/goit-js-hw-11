@@ -38,4 +38,30 @@ form.addEventListener("submit", async (event) => {
 
         if (totalHits > perPage) loadMoreBtn.classList.remove("hidden");
     } catch (error) {
-        iziToast.error({ title:
+        iziToast.error({ title: "Помилка", message: "Не вдалося завантажити зображення." });
+    } finally {
+        loader.classList.add("hidden");
+    }
+});
+
+loadMoreBtn.addEventListener("click", async () => {
+    page++; 
+    loader.classList.remove("hidden"); 
+
+    try {
+        const { images } = await fetchImages(query, page, perPage);
+        renderGallery(images); 
+
+        if (page * perPage >= totalHits) {
+            loadMoreBtn.classList.add("hidden");
+            iziToast.info({ title: "Інформація", message: "Це останні зображення." });
+        }
+
+        const { height } = document.querySelector(".gallery-item").getBoundingClientRect();
+        window.scrollBy({ top: height * 2, behavior: "smooth" });
+    } catch (error) {
+        iziToast.error({ title: "Помилка", message: "Не вдалося завантажити зображення." });
+    } finally {
+        loader.classList.add("hidden"); 
+    }
+});
