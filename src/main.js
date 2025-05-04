@@ -3,10 +3,11 @@ import { renderGallery, clearGallery } from "./js/render-functions.js";
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 
-const form = document.querySelector(".form");
-const gallery = document.querySelector(".gallery");
-const loadMoreBtn = document.querySelector(".load-more");
-const loader = document.querySelector(".loader");
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('.form');
+    const gallery = document.querySelector('.gallery');
+    const loadMoreBtn = document.querySelector('.load-more');
+    const loader = document.querySelector('.loader');
 
 let query = "";
 let page = 1;
@@ -62,4 +63,5 @@ loadMoreBtn.addEventListener("click", async () => {
     } finally {
         loader.classList.add("hidden"); 
     }
+});
 });
